@@ -37,9 +37,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView inform;
     private ConstraintLayout click;
     private SoundPool soundPool;
-    private int sound1,sound2,sound3,sound4,sound5,sound6,def;
+    private int sound1,sound2;
     private Random gen= new Random();
-
     private Integer s;
     private Integer c;
     private Integer x;
@@ -61,12 +60,6 @@ public class MainActivity extends AppCompatActivity {
         series=findViewById(R.id.textView2);
         time=findViewById(R.id.textView);
         inform=findViewById(R.id.textView3);
-
-
-
-
-
-
         mediaPlayer=MediaPlayer.create(this, R.raw.sfd);
         mediaPlayer.setLooping(true);
 
@@ -77,33 +70,21 @@ if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
             .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
             .build();
     soundPool=new SoundPool.Builder()
-            .setMaxStreams(7)
+            .setMaxStreams(2)
             .setAudioAttributes(audioAttributes)
             .build();
 }
 else{
     soundPool=new SoundPool(3, AudioManager.STREAM_MUSIC,0);
-
 }
-sound1=soundPool.load(this, R.raw.s1,1 );
+sound1=soundPool.load(this, R.raw.bzz,1 );
 sound2=soundPool.load(this, R.raw.s2,1 );
-sound3=soundPool.load(this, R.raw.s3,1 );
-sound4=soundPool.load(this, R.raw.s4,1 );
-sound5=soundPool.load(this, R.raw.s5,1 );
-sound6=soundPool.load(this, R.raw.s6,1 );
-def=soundPool.load(this, R.raw.bzz,1 );
-
 
     }
 
 
 
     public void start(View view){
-
-
-
-
-
         if(st){
             mediaPlayer.start();
             bt.setText("Restart");
@@ -128,7 +109,6 @@ def=soundPool.load(this, R.raw.bzz,1 );
                         if(c<1){c=1;}
                         x=s*c*1000+10000;
                         s--;
-
                     }
 
                     if (TimerRunning) { pause(); inform.setText("CLICK TO START");}
@@ -155,13 +135,8 @@ def=soundPool.load(this, R.raw.bzz,1 );
 st=true;
         }
 
-
-
-
-
     }
         private void startTimer () {
-
             mCDT = new CountDownTimer(x, 1000) {
                 @RequiresApi(api = Build.VERSION_CODES.N)
                 @Override
@@ -185,7 +160,6 @@ st=true;
 
         }
 
-
         public void updateCountDownText () {
             time.setText(c.toString());
             if(s==0){series.setText("");}
@@ -193,7 +167,7 @@ st=true;
 
             if(c==1&&s!=0){
                 s--;
-                sounds(gen.nextInt(6));
+                sounds(gen.nextInt(2));
 
                 c=Integer.parseInt(czas.getText().toString());
             }
@@ -203,45 +177,25 @@ st=true;
                 series.setText("KONIEC!");
                 click.setOnClickListener(null);
 
-                sounds(def);
-
+                sounds(0);
             }
             else{c--;}
-
-
-
         }
 
         public void sounds(Integer r){
 
-
-
 switch (r){
-
     case 0:
         soundPool.play(sound1,1,1,0,0,1);
         break;
     case 1:
         soundPool.play(sound2,1,1,0,0,1);
         break;
-    case 2:
-        soundPool.play(sound3,1,1,0,0,1);
-        break;
-    case 3:
-        soundPool.play(sound4,1,1,0,0,1);
-        break;
-    case 4:
-        soundPool.play(sound5,1,1,0,0,1);
-        break;
-    case 5:
-        soundPool.play(sound6,1,1,0,0,1);
-        break;
+
 
     default:
-        soundPool.play(def,1,1,0,0,1);
+
 }
-
-
         }
 
 }
